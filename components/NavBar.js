@@ -16,7 +16,7 @@ const NavBar = () => {
       <Link href="/about" legacyBehavior >
         <a className={router.pathname === "/about" ? "active" : ""}>About</a>
       </Link>
-      <style jsx>{`nav{background-color:tomato;} a{text-decoration: none;} .active{color:yellow;}`}</style>
+      <style jsx>{`a{text-decoration: none;} .active{color:tomato;}`}</style>
     </nav>
   );
 };

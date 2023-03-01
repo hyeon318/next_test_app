@@ -1,13 +1,16 @@
-import NavBar from '@/components/NavBar';
-import '../styles/globals.css'; // custom app 에서만 import 가 가능함
+import Layout from '@/components/Layout';
+import Head from 'next/head';
+import { useRouter } from 'next/router';
+// import '../styles/globals.css'; // custom app 에서만 import 가 가능함
 
+
+// google analytics
 export default function App({Component, pageProps}){
-  return <>
-      <NavBar/>
-      <Component {...pageProps}></Component>
-      <span>hello</span>
-      <style jsx global>{`a{color:white}`}</style>
-    </>
+  const router = useRouter();
+  return (
+      <Layout>
+        <Component {...pageProps}></Component>
+      </Layout>)
 }
 // next js 는 url 페이지를 호출할때 해당 component들을 _app 의 Component의 매개변수로 넣어 해당 함수를 실행 시킨다.
 // 현재 <Component >(중략)</Component> 에 있는 부분을 div 로 대체하면, about 페이지를 호출할때 
