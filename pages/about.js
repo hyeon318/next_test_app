@@ -3,7 +3,7 @@ import React from 'react';
 
 const about = () => {
   return <div>
-    <NavBar/>
+    {/* <NavBar/> */}
     <h1>about</h1>
   </div>
 };

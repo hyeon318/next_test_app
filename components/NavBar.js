@@ -10,12 +10,13 @@ const NavBar = () => {
     <nav>
       {/* <a href="/">Home</a> 를 쓰는경우 페이지 자체라 reload 되어 spa 적으로 동작하지 않는다 => Link tag 를 사용할 것*/}
       {/* Link tag는 client side 의 navigation 을 생성해줌 */}
-      <Link href="/" className={`${styles.link} ${ router.pathname === "/" ? styles.active : ""}`}>
-        Home
+      <Link href="/" legacyBehavior >
+        <a className={router.pathname === "/" ? "active" : ""}>Home</a>
       </Link>
-      <Link href="/about" className={[styles.link, router.pathname === "/about" ? styles.active : ""].join(" ")}>
-        About
+      <Link href="/about" legacyBehavior >
+        <a className={router.pathname === "/about" ? "active" : ""}>About</a>
       </Link>
+      <style jsx>{`nav{background-color:tomato;} a{text-decoration: none;} .active{color:yellow;}`}</style>
     </nav>
   );
 };
