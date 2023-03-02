@@ -15,17 +15,21 @@ export default function Home({results}) {
   const onClickMovie = (id, title) => {
     console.log(id);
     // router.push(`/movies/${id}`);
-    router.push(
-      {
-        pathname: `/movies/${id}`,
-        query: {
-          id
-          , title
-        }
-        // -> query 미쳤는데?
-      }, `/movies/${id}`);
-      // 마지막 param 은 url "as"
+    
+    // 1. masking
+    // router.push(
+    //   {
+    //     pathname: `/movies/${id}`,
+    //     query: {
+    //       id
+    //       , title
+    //     }
+    //     // -> query 미쳤는데?
+    //   }, `/movies/${id}`);
+    //   // 마지막 param 은 url "as"
 
+    // 2. no masking
+    router.push({ pathname: `/movies/${title}/${id}`})
 
   }
 
@@ -46,11 +50,13 @@ export default function Home({results}) {
         <div onClick={()=> onClickMovie(movie.id, movie.title)}className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
           <h4>
-            <Link href={{pathname: `/movies/${movie.id}`,
+            {/* 1. masking */}
+            {/* <Link href={{pathname: `/movies/${movie.id}`,
               query: {
                 title : movie.original_title
               }}}
-              as={`/movies/${movie.id}`} legacyBehavior>
+              as={`/movies/${movie.id}`} legacyBehavior> */}
+            <Link href={{pathname: `/movies/${movie.original_title}/${movie.id}`}} legacyBehavior>
               <a>{movie.original_title}</a>
             </Link>
           </h4>
