@@ -1,5 +1,6 @@
 import NavBar from '@/components/NavBar';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import Seo from './Seo';
 // import '../styles/globals.css'; //동작 x
@@ -9,6 +10,25 @@ const API_KEY = "10923b261ba94d897ac6b81148314a3f";
 // api key 숨기기
 
 export default function Home({results}) {
+  const router = useRouter();
+
+  const onClickMovie = (id, title) => {
+    console.log(id);
+    // router.push(`/movies/${id}`);
+    router.push(
+      {
+        pathname: `/movies/${id}`,
+        query: {
+          id
+          , title
+        }
+        // -> query 미쳤는데?
+      }, `/movies/${id}`);
+      // 마지막 param 은 url "as"
+
+
+  }
+
   return (
     <div className="container">
       <Seo title="Home" />
@@ -17,12 +37,24 @@ export default function Home({results}) {
       {/* use effect 이후로 data 를 loading 한 후에 실제 데이터를 가져온다. */}
       {!results && <h4>Loading...</h4>}
       {results?.map((movie) => (
-        <Link href={`/movies/${movie.id}`} key={movie.id} legacyBehavior>
-          <div className="movie" key={movie.id}>
+        // <Link href={`/movies/${movie.id}`} key={movie.id} legacyBehavior>
+        //   <div className="movie" key={movie.id}>
+        //   <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
+        //     <h4>{movie.original_title}</h4>
+        //   </div>
+        // </Link>
+        <div onClick={()=> onClickMovie(movie.id, movie.title)}className="movie" key={movie.id}>
           <img src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`} />
-            <h4>{movie.original_title}</h4>
-          </div>
-        </Link>
+          <h4>
+            <Link href={{pathname: `/movies/${movie.id}`,
+              query: {
+                title : movie.original_title
+              }}}
+              as={`/movies/${movie.id}`} legacyBehavior>
+              <a>{movie.original_title}</a>
+            </Link>
+          </h4>
+        </div>
       ))}
       <style jsx>{`
         .container {
@@ -43,6 +75,10 @@ export default function Home({results}) {
         .movie h4 {
           font-size: 18px;
           text-align: center;
+        }
+        a{
+          text-decoration: none;
+          color: black;
         }
       `}</style>
     </div>
